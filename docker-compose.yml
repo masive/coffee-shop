@@ -1,0 +1,40 @@
+#version: '3'
+#services:
+#  postgres:
+#    build:
+#      context: .
+#      dockerfile: /db/Dockerfile
+#    ports:
+#      - "5432:5432"
+#    volumes:
+#      - ./data:/var/lib/postgresql/data
+
+# Use postgres/example user/password credentials
+version: '3.1'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./db/data:/docker-entrypoint-initdb.d/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+        - "5432:5432"
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: always
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+volumes:
+  pgadmin-data:
