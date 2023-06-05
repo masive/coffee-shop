@@ -1,20 +1,12 @@
-import datetime
-from datetime import date
-from typing import Optional
-
-from pydantic import BaseModel, root_validator
+from pydantic import BaseModel, Field
 
 
-class Customer(BaseModel):
+class BirthdayCustomer(BaseModel):
     customer_id: int
     customer_first_name: str
-    birthdate: date
-    is_birthday: bool = False
 
-    @root_validator()
-    def set_has_birthday(cls, values: dict) -> dict:
-        current_date = values["birthdate"]
-        if current_date == datetime.date.today():
-            values |= {"is_birthday": True}
-            return values
-        return values
+
+class Customers(BaseModel):
+    """A list of customers."""
+
+    birthday_customers: list[BirthdayCustomer] = Field(alias="customers")

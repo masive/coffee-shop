@@ -2,11 +2,11 @@
 CREATE TABLE customer (
     customer_id SERIAL PRIMARY KEY,
     home_store VARCHAR(255),
-    customer_first_name VARCHAR(255),
-    customer_email VARCHAR(255),
+    customer_first_name VARCHAR(255) NOT NULL,
+    customer_email VARCHAR(255) NOT NULL UNIQUE,
     customer_since DATE,
     loyalty_card_number VARCHAR(50),
-    birthdate DATE,
+    birthdate DATE NOT NULL,
     gender VARCHAR(10),
     birth_year INTEGER
 );
